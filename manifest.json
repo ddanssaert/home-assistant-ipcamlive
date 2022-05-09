@@ -1,0 +1,10 @@
+{
+  "domain": "ipcamlive",
+  "name": "IPCamLive",
+  "config_flow": false,
+  "requirements": ["av==9.2.0", "pillow==9.1.0"],
+  "documentation": "",
+  "codeowners": ["@ddanssaert"],
+  "iot_class": "local_push",
+  "version": "0.0.0"
+}
