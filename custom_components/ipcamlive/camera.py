@@ -58,7 +58,7 @@ async def async_setup_platform(
     async_add_entities(
         [
             IPCamLiveCamera(
-                name=config[CONF_NAME] if CONF_NAME else config[CONF_ALIAS],
+                name=config[CONF_NAME] or config[CONF_ALIAS],
                 alias=config[CONF_ALIAS],
                 framerate=config[CONF_FRAMERATE],
             )
