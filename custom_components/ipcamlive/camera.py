@@ -1,14 +1,10 @@
 from typing import Optional
 
 import httpx
-import requests
 import voluptuous as vol
 from homeassistant.components.camera import Camera, PLATFORM_SCHEMA  #, CameraEntityFeature
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.entity import DeviceInfo
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
@@ -51,6 +47,7 @@ async def async_setup_entry(
     )
 '''
 
+
 async def async_setup_platform(
     hass: HomeAssistant,
     config: ConfigType,
@@ -71,8 +68,8 @@ async def async_setup_platform(
 
 
 class IPCamLiveStreamState:
-    def __init__(self, streamavailable: bool, address: str, stream_id: str):
-        self.streamavailable: bool = streamavailable
+    def __init__(self, stream_available: bool, address: str, stream_id: str):
+        self.stream_available: bool = stream_available
         self.address: str = address
         self.stream_id: str = stream_id
 
