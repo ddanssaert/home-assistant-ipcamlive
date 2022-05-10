@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType, UNDEFINED
 
 from .const import CONF_ALIAS, CONF_FRAMERATE, DEFAULT_FRAMERATE, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
     GET_IMAGE_TIMEOUT, CONF_NAME
@@ -58,7 +58,7 @@ async def async_setup_platform(
     async_add_entities(
         [
             IPCamLiveCamera(
-                name=config[CONF_NAME] or config[CONF_ALIAS],
+                name=config[CONF_NAME] if config[CONF_NAME] != UNDEFINED else config[CONF_ALIAS],
                 alias=config[CONF_ALIAS],
                 framerate=config[CONF_FRAMERATE],
             )
@@ -85,7 +85,7 @@ class IPCamLiveStreamState:
             raise RuntimeError(f'No stream found with alias `{alias}`')
         details = data.get('details')
         return cls(
-            streamavailable=details.get('streamavailable') == "1",
+            stream_available=details.get('streamavailable') == "1",
             address=details.get('address'),
             stream_id=details.get('streamid'),
         )
