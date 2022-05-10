@@ -1,7 +1,7 @@
 {
   "domain": "ipcamlive",
   "name": "IPCamLive",
-  "config_flow": false,
+  "config_flow": true,
   "requirements": [],
   "documentation": "",
   "codeowners": ["@ddanssaert"],

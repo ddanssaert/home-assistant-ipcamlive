@@ -4,11 +4,12 @@ from __future__ import annotations
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 
 from .camera import IPCamLiveCamera
-from .const import PLATFORMS, CONF_ALIAS, CONF_NAME, CONF_FRAMERATE
+from .const import PLATFORMS, CONF_ALIAS, CONF_FRAMERATE
 
 
 __all__ = [

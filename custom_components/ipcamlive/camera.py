@@ -3,6 +3,8 @@ from typing import Optional
 import httpx
 import voluptuous as vol
 from homeassistant.components.camera import Camera, PLATFORM_SCHEMA  #, CameraEntityFeature
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.httpx_client import get_async_client
@@ -10,7 +12,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType, UNDEFINED
 
 from .const import CONF_ALIAS, CONF_FRAMERATE, DEFAULT_FRAMERATE, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
-    GET_IMAGE_TIMEOUT, CONF_NAME
+    GET_IMAGE_TIMEOUT
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -24,7 +26,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-'''
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -37,15 +38,10 @@ async def async_setup_entry(
                 name=entry.title,
                 alias=entry.options[CONF_ALIAS],
                 framerate=entry.options[CONF_FRAMERATE],
-                unique_id=entry.entry_id,
-                device_info=DeviceInfo(
-                    name=entry.title,
-                    identifiers={(DOMAIN, entry.entry_id)},
-                ),
             )
-        ]
+        ],
+        update_before_add=True,
     )
-'''
 
 
 async def async_setup_platform(
@@ -74,7 +70,7 @@ class IPCamLiveStreamState:
         self.stream_id: str = stream_id
 
     @classmethod
-    async def from_alias(cls, hass, alias: str) -> 'IPCamLiveStreamState':
+    async def async_from_alias(cls, hass, alias: str) -> Optional['IPCamLiveStreamState']:
         async_client = get_async_client(hass, verify_ssl=True)
         response = await async_client.get(IPCAMLIVE_STREAM_STATE_URL, params={
             'alias': alias,
@@ -82,13 +78,17 @@ class IPCamLiveStreamState:
         response.raise_for_status()
         data = response.json()
         if not data:
-            raise RuntimeError(f'No stream found with alias `{alias}`')
+            LOGGER.error(f'No stream found with alias `{alias}`')
+            return data
         details = data.get('details')
         return cls(
             stream_available=details.get('streamavailable') == "1",
             address=details.get('address'),
             stream_id=details.get('streamid'),
         )
+
+    def is_available(self) -> bool:
+        return self.stream_available
 
     def get_stream_url(self) -> str:
         return f'{self.address}streams/{self.stream_id}/stream.m3u8'
@@ -124,7 +124,10 @@ class IPCamLiveCamera(Camera):
             height: Optional[int] = None,
     ) -> Optional[bytes]:
         """Return a still image response from the camera."""
-        stream_state = await IPCamLiveStreamState.from_alias(hass=self.hass, alias=self._alias)
+        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._alias)
+        if not stream_state or not stream_state.is_available():
+            return None
+
         snapshot_url = stream_state.get_snaphsot_url()
 
         try:
@@ -135,15 +138,16 @@ class IPCamLiveCamera(Camera):
             response.raise_for_status()
             return response.content
         except httpx.TimeoutException:
-            LOGGER.error("Timeout getting camera image from %s", self._name)
+            LOGGER.error("Timeout getting camera image from %s", self._attr_name)
         except (httpx.RequestError, httpx.HTTPStatusError) as err:
-            LOGGER.error("Error getting new camera image from %s: %s", self._name, err)
+            LOGGER.error("Error getting new camera image from %s: %s", self._attr_name, err)
 
         return None
 
     async def stream_source(self):
         """Return the source of the stream."""
-        stream_state = await IPCamLiveStreamState.from_alias(hass=self.hass, alias=self._alias)
+        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._alias)
+        if not stream_state or not stream_state.is_available():
+            return None
         stream_url = stream_state.get_stream_url()
-
         return stream_url
