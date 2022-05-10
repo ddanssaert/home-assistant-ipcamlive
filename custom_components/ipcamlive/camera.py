@@ -15,7 +15,7 @@ from .const import CONF_ALIAS, CONF_FRAMERATE, DEFAULT_FRAMERATE, DOMAIN, LOGGER
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_ALIAS): cv.string,
-        vol.Optional(CONF_NAME, default=None): cv.string,
+        vol.Optional(CONF_NAME): cv.string,
         vol.Optional(CONF_FRAMERATE, default=DEFAULT_FRAMERATE): vol.Any(
             cv.small_float,
             cv.positive_int,
@@ -58,7 +58,7 @@ async def async_setup_platform(
     async_add_entities(
         [
             IPCamLiveCamera(
-                name=config[CONF_NAME] or config[CONF_ALIAS],
+                name=config[CONF_NAME] if CONF_NAME in config else config[CONF_ALIAS],
                 alias=config[CONF_ALIAS],
                 framerate=config[CONF_FRAMERATE],
             )
