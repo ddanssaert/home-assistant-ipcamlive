@@ -1,1 +1,42 @@
-{}
+{
+  "config": {
+    "error": {
+      "unknown": "[%key:common::config_flow::error::unknown%]",
+      "alias_not_found": "No stream found with this alias",
+      "already_exists": "A camera with this alias already exists."
+    },
+    "abort": {
+      "single_instance_allowed": "[%key:common::config_flow::abort::single_instance_allowed%]",
+      "no_devices_found": "[%key:common::config_flow::abort::no_devices_found%]"
+    },
+    "step": {
+      "user": {
+        "description": "Enter the settings to connect to the camera.",
+        "data": {
+          "alias": "IPCamLive stream alias",
+          "name": "Name (alias by default)",
+          "framerate": "Frame Rate (Hz)"
+        }
+      },
+      "confirm": {
+        "description": "[%key:common::config_flow::description::confirm_setup%]"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "alias": "[%key:component::ipcamlive::config::step::user::data::alias%]",
+          "name": "[%key:component::ipcamlive::config::step::user::data::name%]",
+          "framerate": "[%key:component::ipcamlive::config::step::user::data::framerate%]"
+        }
+      }
+    },
+    "error": {
+      "unknown": "[%key:common::config_flow::error::unknown%]",
+      "alias_not_found": "[%key:component::ipcamlive::config::error::alias_not_found%]",
+      "already_exists": "[%key:component::ipcamlive::config::error::already_exists%]"
+    }
+  }
+}
