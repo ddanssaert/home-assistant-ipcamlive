@@ -1,0 +1,42 @@
+{
+  "config": {
+    "error": {
+      "unknown": "Onverwachte fout",
+      "alias_not_found": "Geen stream gevonden met deze alias",
+      "already_exists": "Een camera met deze alias bestaat al."
+    },
+    "abort": {
+      "single_instance_allowed": "Al geconfigureerd. Slechts een enkele configuratie mogelijk.",
+      "no_devices_found": "Geen apparaten gevonden op het netwerk"
+    },
+    "step": {
+      "user": {
+        "description": "Voer de instellingen in om verbinding te maken met de stream.",
+        "data": {
+          "alias": "IPCamLive stream alias",
+          "name": "Naam (alias indien leeg)",
+          "framerate": "Framesnelheid (Hz)"
+        }
+      },
+      "confirm": {
+        "description": "Wilt u beginnen met instellen?"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "alias": "IPCamLive stream alias",
+          "name": "Naam (alias indien leeg)",
+          "framerate": "Framesnelheid (Hz)"
+        }
+      }
+    },
+    "error": {
+      "unknown": "Onverwachte fout",
+      "alias_not_found": "Geen stream gevonden met deze alias",
+      "already_exists": "Een camera met deze alias bestaat al."
+    }
+  }
+}
