@@ -1,4 +1,4 @@
-[![](https://img.shields.io/github/release/ddanssaert/ha-ipcamlive/all.svg?style=for-the-badge)](https://github.com/ddanssaert/ha-ipcamlive/releases)
+[![](https://img.shields.io/github/release/ddanssaert/home-assistant-ipcamlive/all.svg?style=for-the-badge)](https://github.com/ddanssaert/home-assistant-ipcamlive/releases)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 [![](https://img.shields.io/badge/MAINTAINER-%40ddanssaert-green?style=for-the-badge)](https://github.com/ddanssaert)
 
