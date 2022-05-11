@@ -98,7 +98,7 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
         # abort if we've already got this one.
         if self.check_for_existing(import_config):
             return self.async_abort(reason="already_exists")
-        # Don't bother testing the still or stream details on yaml import.
+        # Don't bother testing the alias on yaml import.
         alias = import_config.get(CONF_ALIAS)
         name = import_config.get(CONF_NAME) or alias
         return self.async_create_entry(title=name, data={}, options=import_config)
@@ -126,8 +126,7 @@ class IPCamLiveOptionsFlowHandler(OptionsFlow):
             if not errors:
                 data = {
                     CONF_ALIAS: user_input.get(CONF_ALIAS),
-                    CONF_NAME: user_input.get(CONF_NAME),
-                    CONF_FRAMERATE: user_input.get(CONF_FRAMERATE),
+                    CONF_NAME: user_input.get(CONF_NAME)
                 }
                 return self.async_create_entry(
                     title=name,
