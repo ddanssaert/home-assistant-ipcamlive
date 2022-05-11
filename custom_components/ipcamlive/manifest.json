@@ -4,6 +4,7 @@
   "config_flow": true,
   "requirements": [],
   "documentation": "https://github.com/ddanssaert/home-assistant-ipcamlive",
+  "issue_tracker": "https://github.com/ddanssaert/home-assistant-ipcamlive/issues",
   "codeowners": ["@ddanssaert"],
   "iot_class": "local_push",
   "version": "0.0.1"
