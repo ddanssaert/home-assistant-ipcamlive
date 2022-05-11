@@ -34,6 +34,7 @@ async def async_setup_entry(
             IPCamLiveCamera(
                 name=entry.title,
                 alias=entry.options[CONF_ALIAS],
+                unique_id=entry.entry_id,
             )
         ],
     )
@@ -84,13 +85,15 @@ class IPCamLiveCamera(Camera):
             *,
             name: str,
             alias: str,
+            unique_id: str,
     ) -> None:
         """Initialize an IPCamLive camera."""
         super().__init__()
         self._attr_name = name
-        self._attr_unique_id = alias
         self._alias = alias
         self._attr_supported_features = 2  # CameraEntityFeature.STREAM
+        if unique_id is not None:
+            self._attr_unique_id = unique_id
 
     @property
     def name(self):
