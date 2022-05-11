@@ -79,6 +79,8 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
             # Secondary validation because serialised vol can't seem to handle this complexity:
             errors = await async_test_alias(self.hass, user_input)
             alias = user_input.get(CONF_ALIAS)
+            if self.check_for_existing(user_input):
+                errors.update({CONF_ALIAS: 'already_exists'})
             name = user_input.get(CONF_NAME) or alias
             if not errors:
                 return self.async_create_entry(
