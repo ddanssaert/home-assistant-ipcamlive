@@ -36,25 +36,6 @@ async def async_setup_entry(
                 alias=entry.options[CONF_ALIAS],
             )
         ],
-        update_before_add=True,
-    )
-
-
-async def async_setup_platform(
-    hass: HomeAssistant,
-    config: ConfigType,
-    async_add_entities: AddEntitiesCallback,
-    discovery_info: Optional[DiscoveryInfoType] = None,
-) -> None:
-    """Set up a IPCamLive Camera based on a config entry."""
-    async_add_entities(
-        [
-            IPCamLiveCamera(
-                name=config[CONF_NAME] or config[CONF_ALIAS],
-                alias=config[CONF_ALIAS],
-            )
-        ],
-        update_before_add=True,
     )
 
 
