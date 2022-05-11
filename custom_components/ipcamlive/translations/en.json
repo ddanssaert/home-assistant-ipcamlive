@@ -1,0 +1,27 @@
+{
+  "state": {
+    "_": {
+      "idle": "Idle",
+      "streaming": "Streaming"
+    }
+  },
+  "config": {
+    "error": {
+      "unknown": "Unexpected error",
+      "alias_not_found": "No camera found with this alias",
+      "alias_already_exists": "A camera with this alias already exists."
+    },
+    "step": {
+      "user": {
+        "description": "Enter IPCamLive alias to connect to the camera.",
+        "data": {
+          "alias": "IPCamLive alias",
+          "name": "Name (leave empty to use alias)"
+        }
+      },
+      "confirm": {
+        "description": "Do you want to start set up?"
+      }
+    }
+  }
+}

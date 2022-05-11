@@ -9,7 +9,7 @@
     "error": {
       "unknown": "[%key:common::config_flow::error::unknown%]",
       "alias_not_found": "No stream found with this alias",
-      "already_exists": "A camera with this alias already exists."
+      "alias_already_exists": "A camera with this alias already exists."
     },
     "step": {
       "user": {

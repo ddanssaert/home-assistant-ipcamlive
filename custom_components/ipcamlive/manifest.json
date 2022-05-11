@@ -6,5 +6,5 @@
   "documentation": "",
   "codeowners": ["@ddanssaert"],
   "iot_class": "local_push",
-  "version": "0.0.0"
+  "version": "0.0.1"
 }
