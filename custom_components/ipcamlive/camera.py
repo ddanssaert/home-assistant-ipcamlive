@@ -1,3 +1,4 @@
+from json import JSONDecodeError
 from typing import Optional
 
 import httpx
@@ -65,30 +66,35 @@ class IPCamLiveStreamState:
 
     @classmethod
     async def async_from_alias(cls, hass, alias: str) -> Optional['IPCamLiveStreamState']:
-        async_client = get_async_client(hass, verify_ssl=True)
-        response = await async_client.get(IPCAMLIVE_STREAM_STATE_URL, params={
-            'alias': alias,
-        })
-        response.raise_for_status()
-        data = response.json()
-        if not data:
-            LOGGER.error(f'No stream found with alias `{alias}`')
-            return data
-        details = data.get('details')
-        return cls(
-            stream_available=details.get('streamavailable') == "1",
-            address=details.get('address'),
-            stream_id=details.get('streamid'),
-        )
+        try:
+            async_client = get_async_client(hass, verify_ssl=True)
+            response = await async_client.get(IPCAMLIVE_STREAM_STATE_URL, params={
+                'alias': alias,
+            })
+            response.raise_for_status()
+            data = response.json()
+            details = data.get('details')
+            return cls(
+                stream_available=details.get('streamavailable') == "1",
+                address=details.get('address'),
+                stream_id=details.get('streamid'),
+            )
+        except JSONDecodeError:
+            LOGGER.warning(f'No stream found with alias `{alias}`')
+        return None
 
     def is_available(self) -> bool:
         return self.stream_available
 
-    def get_stream_url(self) -> str:
-        return f'{self.address}streams/{self.stream_id}/stream.m3u8'
+    def get_stream_url(self) -> Optional[str]:
+        if self.stream_available:
+            return f'{self.address}streams/{self.stream_id}/stream.m3u8'
+        return None
 
-    def get_snaphsot_url(self) -> str:
-        return f'{self.address}streams/{self.stream_id}/snapshot.jpg'
+    def get_snaphsot_url(self) -> Optional[str]:
+        if self.stream_available:
+            return f'{self.address}streams/{self.stream_id}/snapshot.jpg'
+        return None
 
 
 class IPCamLiveCamera(Camera):
