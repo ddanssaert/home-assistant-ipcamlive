@@ -108,6 +108,7 @@ class IPCamLiveCamera(Camera):
         """Initialize an IPCamLive camera."""
         super().__init__()
         self._attr_name = name
+        self._attr_unique_id = alias
         self._alias = alias
         
         self._attr_frame_interval = 1 / framerate
