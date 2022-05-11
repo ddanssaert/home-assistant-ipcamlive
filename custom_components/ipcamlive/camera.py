@@ -13,7 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from .const import CONF_ALIAS, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
-    GET_IMAGE_TIMEOUT
+    GET_IMAGE_TIMEOUT, ATTR_ALIAS
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -99,12 +99,18 @@ class IPCamLiveCamera(Camera):
             self._attr_unique_id = unique_id
 
     @property
-    def name(self):
+    def extra_state_attributes(self):
+        return {
+            ATTR_ALIAS: self._attr_alias,
+        }
+
+    @property
+    def name(self) -> str:
         """Return the name of this device."""
         return self._attr_name
 
     @property
-    def alias(self):
+    def alias(self) -> str:
         """Return the alias of this device."""
         return self._attr_alias
 
