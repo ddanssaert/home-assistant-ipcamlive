@@ -15,6 +15,6 @@ The configuration process will show an error message if the alias could not be f
 # Finding the IPCamLive Alias:
 ## Directly on ipcamlive.com
 If you found a camera stream directly on the IPCamLive website, the alias is specified in the url.
-For example, for [https://ipcamlive.com/player/player.php?alias=broadwaycam]() the alias is `broadwaycam`.
+For example, for [https://ipcamlive.com/player/player.php?alias=broadwaycam](https://ipcamlive.com/player/player.php?alias=broadwaycam) the alias is `broadwaycam`.
 ## Embedded on a website
 If you found a camera stream from IPCamLive on an external webpage, you can use *inspect element* to find the player url and extract the alias.
