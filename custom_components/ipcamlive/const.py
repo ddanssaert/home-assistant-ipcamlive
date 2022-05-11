@@ -7,6 +7,7 @@ from homeassistant.const import Platform
 
 DOMAIN: Final = "ipcamlive"
 PLATFORMS: Final = [Platform.CAMERA]
+MANUFACTURER: Final = 'IPCamLive'
 
 LOGGER = logging.getLogger(__package__)
 
