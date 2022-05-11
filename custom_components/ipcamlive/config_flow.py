@@ -13,41 +13,28 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers import config_validation as cv
 
 from .camera import IPCamLiveStreamState
-from .const import (
-    CONF_ALIAS,
-    CONF_FRAMERATE,
-    DOMAIN,
-    DEFAULT_FRAMERATE,
-)
+from .const import CONF_ALIAS, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-DEFAULT_DATA = {
-    CONF_FRAMERATE: DEFAULT_FRAMERATE,
-}
+DEFAULT_DATA = {}
 
 
 def build_schema(
     user_input: dict[str, Any] | MappingProxyType[str, Any],
-    is_options_flow: bool = False,
+    show_advanced: bool = False,
 ):
     """Create schema for camera config setup."""
     spec = {
         vol.Required(
             CONF_ALIAS,
             description={"suggested_value": user_input.get(CONF_ALIAS, '')},
-        ): str,
+        ): cv.string,
         vol.Optional(
             CONF_NAME,
             description={"suggested_value": user_input.get(CONF_NAME, '')},
-        ): str,
-        vol.Required(
-            CONF_FRAMERATE,
-            description={"suggested_value": user_input.get(CONF_FRAMERATE, DEFAULT_FRAMERATE)},
-        ): vol.All(vol.Range(min=0, min_included=False), cv.positive_float),
+        ): cv.string,
     }
-    if is_options_flow:
-        pass
     return vol.Schema(spec)
 
 

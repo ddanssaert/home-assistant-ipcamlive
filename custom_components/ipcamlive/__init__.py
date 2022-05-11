@@ -9,13 +9,12 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 
 from .camera import IPCamLiveCamera
-from .const import PLATFORMS, CONF_ALIAS, CONF_FRAMERATE
+from .const import PLATFORMS, CONF_ALIAS
 
 
 __all__ = [
     "CONF_ALIAS",
     "CONF_NAME",
-    "CONF_FRAMERATE",
     "IPCamLiveCamera",
 ]
 
@@ -52,7 +51,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 

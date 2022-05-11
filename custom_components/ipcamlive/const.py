@@ -14,7 +14,3 @@ IPCAMLIVE_STREAM_STATE_URL = f'https://ipcamlive.com/player/getcamerastreamstate
 GET_IMAGE_TIMEOUT = 10
 
 CONF_ALIAS: Final = "alias"
-CONF_FRAMERATE: Final = "framerate"
-
-
-DEFAULT_FRAMERATE: int = 30

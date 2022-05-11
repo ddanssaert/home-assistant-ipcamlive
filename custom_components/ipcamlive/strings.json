@@ -14,8 +14,7 @@
         "description": "Enter the settings to connect to the camera.",
         "data": {
           "alias": "IPCamLive stream alias",
-          "name": "Name (alias by default)",
-          "framerate": "Frame Rate (Hz)"
+          "name": "Name (alias by default)"
         }
       },
       "confirm": {
@@ -28,8 +27,7 @@
       "init": {
         "data": {
           "alias": "[%key:component::ipcamlive::config::step::user::data::alias%]",
-          "name": "[%key:component::ipcamlive::config::step::user::data::name%]",
-          "framerate": "[%key:component::ipcamlive::config::step::user::data::framerate%]"
+          "name": "[%key:component::ipcamlive::config::step::user::data::name%]"
         }
       }
     },

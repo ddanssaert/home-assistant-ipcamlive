@@ -14,8 +14,7 @@
         "description": "Voer de instellingen in om verbinding te maken met de stream.",
         "data": {
           "alias": "IPCamLive stream alias",
-          "name": "Naam (alias indien leeg)",
-          "framerate": "Framesnelheid (Hz)"
+          "name": "Naam (alias indien leeg)"
         }
       },
       "confirm": {
@@ -28,8 +27,7 @@
       "init": {
         "data": {
           "alias": "IPCamLive stream alias",
-          "name": "Naam (alias indien leeg)",
-          "framerate": "Framesnelheid (Hz)"
+          "name": "Naam (alias indien leeg)"
         }
       }
     },

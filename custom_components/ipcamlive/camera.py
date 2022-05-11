@@ -9,19 +9,15 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType, UNDEFINED
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-from .const import CONF_ALIAS, CONF_FRAMERATE, DEFAULT_FRAMERATE, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
+from .const import CONF_ALIAS, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
     GET_IMAGE_TIMEOUT
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_ALIAS): cv.string,
         vol.Optional(CONF_NAME, default=''): cv.string,
-        vol.Optional(CONF_FRAMERATE, default=DEFAULT_FRAMERATE): vol.Any(
-            cv.small_float,
-            cv.positive_int,
-        ),
     }
 )
 
@@ -37,7 +33,6 @@ async def async_setup_entry(
             IPCamLiveCamera(
                 name=entry.title,
                 alias=entry.options[CONF_ALIAS],
-                framerate=entry.options[CONF_FRAMERATE],
             )
         ],
         update_before_add=True,
@@ -56,7 +51,6 @@ async def async_setup_platform(
             IPCamLiveCamera(
                 name=config[CONF_NAME] or config[CONF_ALIAS],
                 alias=config[CONF_ALIAS],
-                framerate=config[CONF_FRAMERATE],
             )
         ],
         update_before_add=True,
@@ -103,15 +97,12 @@ class IPCamLiveCamera(Camera):
             *,
             name: str,
             alias: str,
-            framerate: int = DEFAULT_FRAMERATE,
     ) -> None:
         """Initialize an IPCamLive camera."""
         super().__init__()
         self._attr_name = name
         self._attr_unique_id = alias
         self._alias = alias
-        
-        self._attr_frame_interval = 1 / framerate
         self._attr_supported_features = 2  # CameraEntityFeature.STREAM
 
     @property
@@ -128,9 +119,7 @@ class IPCamLiveCamera(Camera):
         stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._alias)
         if not stream_state or not stream_state.is_available():
             return None
-
         snapshot_url = stream_state.get_snaphsot_url()
-
         try:
             async_client = get_async_client(self.hass, verify_ssl=True)
             response = await async_client.get(
@@ -142,7 +131,6 @@ class IPCamLiveCamera(Camera):
             LOGGER.error("Timeout getting camera image from %s", self._attr_name)
         except (httpx.RequestError, httpx.HTTPStatusError) as err:
             LOGGER.error("Error getting new camera image from %s: %s", self._attr_name, err)
-
         return None
 
     async def stream_source(self):
