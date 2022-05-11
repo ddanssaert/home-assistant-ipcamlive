@@ -1,4 +1,10 @@
 {
+  "state": {
+    "_": {
+      "idle": "[%key:common::state::idle%]",
+      "streaming": "[%key:component::camera::state::streaming]"
+    }
+  },
   "config": {
     "error": {
       "unknown": "[%key:common::config_flow::error::unknown%]",
