@@ -22,7 +22,7 @@ DEFAULT_DATA = {}
 
 def build_schema(
     user_input: dict[str, Any] | MappingProxyType[str, Any],
-    show_advanced: bool = False,
+    show_name: bool = False,
 ):
     """Create schema for camera config setup."""
     spec = {
@@ -30,11 +30,14 @@ def build_schema(
             CONF_ALIAS,
             description={"suggested_value": user_input.get(CONF_ALIAS, '')},
         ): cv.string,
-        vol.Optional(
-            CONF_NAME,
-            description={"suggested_value": user_input.get(CONF_NAME, '')},
-        ): cv.string,
     }
+    if show_name:
+        spec.update({
+            vol.Optional(
+                CONF_NAME,
+                description={"suggested_value": user_input.get(CONF_NAME, '')},
+            ): cv.string,
+        })
     return vol.Schema(spec)
 
 
@@ -95,16 +98,6 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
-    async def async_step_import(self, import_config) -> FlowResult:
-        """Handle config import from yaml."""
-        # abort if we've already got this one.
-        if self.check_for_existing(import_config):
-            return self.async_abort(reason="already_exists")
-        # Don't bother testing the alias on yaml import.
-        alias = import_config.get(CONF_ALIAS)
-        name = import_config.get(CONF_NAME) or alias
-        return self.async_create_entry(title=name, data={}, options=import_config)
-
 
 class IPCamLiveOptionsFlowHandler(OptionsFlow):
     """Handle IPCamLive options."""
@@ -136,6 +129,6 @@ class IPCamLiveOptionsFlowHandler(OptionsFlow):
                 )
         return self.async_show_form(
             step_id="init",
-            data_schema=build_schema(user_input or self.config_entry.options, True),
+            data_schema=build_schema(user_input or self.config_entry.options, show_name=True),
             errors=errors,
         )
