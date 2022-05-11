@@ -80,6 +80,9 @@ class IPCamLiveStreamState:
 
 
 class IPCamLiveCamera(Camera):
+    # Entity Properties
+    _attr_name: Optional[str] = None
+
     def __init__(
             self,
             *,
@@ -99,6 +102,11 @@ class IPCamLiveCamera(Camera):
     def name(self):
         """Return the name of this device."""
         return self._attr_name
+
+    @property
+    def alias(self):
+        """Return the alias of this device."""
+        return self._attr_alias
 
     async def async_camera_image(
             self,
