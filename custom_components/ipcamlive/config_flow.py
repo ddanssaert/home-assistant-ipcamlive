@@ -94,7 +94,7 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
-            data_schema=build_schema(user_input),
+            data_schema=build_schema(user_input, show_name=True),
             errors=errors,
         )
 
@@ -129,6 +129,6 @@ class IPCamLiveOptionsFlowHandler(OptionsFlow):
                 )
         return self.async_show_form(
             step_id="init",
-            data_schema=build_schema(user_input or self.config_entry.options, show_name=True),
+            data_schema=build_schema(user_input or self.config_entry.options, show_name=False),
             errors=errors,
         )
