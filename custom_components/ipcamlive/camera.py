@@ -122,7 +122,9 @@ class IPCamLiveCamera(Camera):
         """Return a still image response from the camera."""
         stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._attr_alias)
         if not stream_state or not stream_state.is_available():
+            self._attr_is_streaming = False
             return None
+        self._attr_is_streaming = True
         snapshot_url = stream_state.get_snaphsot_url()
         try:
             async_client = get_async_client(self.hass, verify_ssl=True)
@@ -141,6 +143,8 @@ class IPCamLiveCamera(Camera):
         """Return the source of the stream."""
         stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._attr_alias)
         if not stream_state or not stream_state.is_available():
+            self._attr_is_streaming = False
             return None
+        self._attr_is_streaming = True
         stream_url = stream_state.get_stream_url()
         return stream_url
