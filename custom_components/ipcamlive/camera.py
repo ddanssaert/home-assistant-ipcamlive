@@ -90,7 +90,7 @@ class IPCamLiveCamera(Camera):
         """Initialize an IPCamLive camera."""
         super().__init__()
         self._attr_name = name
-        self._alias = alias
+        self._attr_alias = alias
         self._attr_supported_features = 2  # CameraEntityFeature.STREAM
         if unique_id is not None:
             self._attr_unique_id = unique_id
@@ -106,7 +106,7 @@ class IPCamLiveCamera(Camera):
             height: Optional[int] = None,
     ) -> Optional[bytes]:
         """Return a still image response from the camera."""
-        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._alias)
+        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._attr_alias)
         if not stream_state or not stream_state.is_available():
             return None
         snapshot_url = stream_state.get_snaphsot_url()
@@ -125,7 +125,7 @@ class IPCamLiveCamera(Camera):
 
     async def stream_source(self):
         """Return the source of the stream."""
-        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._alias)
+        stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._attr_alias)
         if not stream_state or not stream_state.is_available():
             return None
         stream_url = stream_state.get_stream_url()
