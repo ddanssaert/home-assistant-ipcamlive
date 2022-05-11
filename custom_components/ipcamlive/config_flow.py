@@ -59,12 +59,14 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
         self.cached_user_input: dict[str, Any] = {}
         self.cached_title = ""
 
+    '''
     @staticmethod
     def async_get_options_flow(
         config_entry: ConfigEntry,
     ) -> IPCamLiveOptionsFlowHandler:
         """Get the options flow for this handler."""
         return IPCamLiveOptionsFlowHandler(config_entry)
+    '''
 
     def check_for_existing(self, options):
         """Check whether an existing entry is using the same alias."""
@@ -99,6 +101,7 @@ class IPCamLiveConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
 
+'''
 class IPCamLiveOptionsFlowHandler(OptionsFlow):
     """Handle IPCamLive options."""
 
@@ -132,3 +135,4 @@ class IPCamLiveOptionsFlowHandler(OptionsFlow):
             data_schema=build_schema(user_input or self.config_entry.options, show_name=False),
             errors=errors,
         )
+'''
