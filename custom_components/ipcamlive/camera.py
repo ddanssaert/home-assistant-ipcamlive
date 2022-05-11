@@ -3,14 +3,13 @@ from typing import Optional
 
 import httpx
 import voluptuous as vol
-from homeassistant.components.camera import Camera, PLATFORM_SCHEMA  #, CameraEntityFeature
+from homeassistant.components.camera import Camera, PLATFORM_SCHEMA, CameraEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.httpx_client import get_async_client
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from .const import CONF_ALIAS, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
     GET_IMAGE_TIMEOUT, ATTR_ALIAS
@@ -94,7 +93,7 @@ class IPCamLiveCamera(Camera):
         super().__init__()
         self._attr_name = name
         self._attr_alias = alias
-        self._attr_supported_features = 2  # CameraEntityFeature.STREAM
+        self._attr_supported_features = CameraEntityFeature.STREAM
         if unique_id is not None:
             self._attr_unique_id = unique_id
 
