@@ -13,7 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from .const import CONF_ALIAS, DOMAIN, LOGGER, IPCAMLIVE_STREAM_STATE_URL, \
-    GET_IMAGE_TIMEOUT, MANUFACTURER
+    GET_IMAGE_TIMEOUT
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -96,10 +96,6 @@ class IPCamLiveCamera(Camera):
     def name(self):
         """Return the name of this device."""
         return self._attr_name
-
-    @property
-    def brand(self):
-        return MANUFACTURER
 
     async def async_camera_image(
             self,
