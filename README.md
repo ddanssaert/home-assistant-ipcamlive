@@ -9,7 +9,7 @@ IPCamLive integration for Home Assistant.
 # Motivation
 The IPCamLive streams are exposed via a m3u8 playlist as a simple MPEG stream. Each camera stream has a unique alias. However, the stream url changes from time to time.
 
-This integration queries the IPCamLive server to get the current stream url for a given camera alias. In fact, [this is already possible with templates](https://github.com/ddanssaert/home-assistant-ipcamlive#native-solution), but this integration provides it in a matter of seconds within the comfort of the UI.
+This integration queries the IPCamLive server to get the current stream url for a given camera alias. In fact, [this is already possible with templates](https://github.com/ddanssaert/home-assistant-ipcamlive#native-solution), but this integration provides it in a matter of seconds within the comfort of the UI. It also provides better error and state handling.
 
 # Installation
 Copy the ipcamlive folder and all of its contents into your Home Assistant's custom_components folder. This is often located inside of your /config folder. If you are running Hass.io, use SAMBA to copy the folder over. If you are running Home Assistant Supervised, the custom_components folder might be located at /usr/share/hassio/homeassistant. It is possible that your custom_components folder does not exist. If that is the case, create the folder in the proper location, and then copy the ipcamlive folder and all of its contents inside the newly created custom_components folder.
