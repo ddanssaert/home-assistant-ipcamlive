@@ -1,0 +1,27 @@
+{
+  "state": {
+    "_": {
+      "idle": "Ociosa",
+      "streaming": "Transmitindo"
+    }
+  },
+  "config": {
+    "error": {
+      "unknown": "Erro inesperado",
+      "alias_not_found": "Nenhuma câmera encontrada com este pseudônimo",
+      "alias_already_exists": "Já existe uma câmera com este pseudônimo."
+    },
+    "step": {
+      "user": {
+        "description": "Digite o pseudônimo da IPCamLive para conectar-se à câmera.",
+        "data": {
+          "alias": "pseudônimo IPCamLive",
+          "name": "Nome (deixe em branco para usar o pseudônimo)"
+        }
+      },
+      "confirm": {
+        "description": "Deseja iniciar a configuração?"
+      }
+    }
+  }
+}
