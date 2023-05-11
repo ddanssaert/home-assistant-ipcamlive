@@ -15,7 +15,8 @@
       "user": {
         "description": "Geben Sie den IPCamLive-Alias ein, um eine Verbindung zur Kamera herzustellen.",
         "data": {
-          "alias": "IPCamLive-Alias"
+          "alias": "IPCamLive-Alias",
+          "name": "Name (leer lassen, um Alias zu verwenden)"
         }
       }
     }
