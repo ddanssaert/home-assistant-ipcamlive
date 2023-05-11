@@ -1,7 +1,8 @@
 {
   "state": {
     "_": {
-      "idle": "Leerlauf"
+      "idle": "Leerlauf",
+      "streaming": "Streaming"
     }
   }
 }
