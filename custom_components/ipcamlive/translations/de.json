@@ -8,7 +8,8 @@
   "config": {
     "error": {
       "unknown": "Unerwarteter Fehler",
-      "alias_not_found": "Mit diesem Alias wurde keine Kamera gefunden"
+      "alias_not_found": "Mit diesem Alias wurde keine Kamera gefunden",
+      "alias_already_exists": "Eine Kamera mit diesem Alias ist bereits vorhanden."
     }
   }
 }
