@@ -4,5 +4,10 @@
       "idle": "Leerlauf",
       "streaming": "Streaming"
     }
+  },
+  "config": {
+    "error": {
+      "unknown": "Unerwarteter Fehler"
+    }
   }
 }
