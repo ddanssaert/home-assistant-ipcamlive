@@ -18,6 +18,9 @@
           "alias": "IPCamLive-Alias",
           "name": "Name (leer lassen, um Alias zu verwenden)"
         }
+      },
+      "confirm": {
+        "description": "Möchten Sie mit der Einrichtung beginnen?"
       }
     }
   }
