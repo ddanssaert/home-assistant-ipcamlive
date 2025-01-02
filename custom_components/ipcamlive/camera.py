@@ -98,6 +98,11 @@ class IPCamLiveCamera(Camera):
             self._attr_unique_id = unique_id
 
     @property
+    def should_poll(self) -> bool:
+        """Override should_poll so that async_update() is called periodically"""
+        return True
+
+    @property
     def extra_state_attributes(self):
         return {
             ATTR_ALIAS: self._attr_alias,
@@ -138,12 +143,21 @@ class IPCamLiveCamera(Camera):
             LOGGER.error("Error getting new camera image from %s: %s", self._attr_name, err)
         return None
 
-    async def stream_source(self):
+    async def stream_source(self) -> str:
         """Return the source of the stream."""
         stream_state = await IPCamLiveStreamState.async_from_alias(hass=self.hass, alias=self._attr_alias)
         if not stream_state or not stream_state.is_available():
             self._attr_is_streaming = False
+            LOGGER.error("Error getting stream url from %s", self._attr_name)
             return None
         self._attr_is_streaming = True
         stream_url = stream_state.get_stream_url()
         return stream_url
+
+    async def async_update(self) -> None:
+        """Update the stream source when IPCamLive's stream url has changed."""
+        if self.stream:
+            new_url = await self.stream_source()
+            if self.stream.source != new_url:
+                self.stream.update_source(new_url)
+                LOGGER.info(f'Updated IPCamLive stream_source for {self._attr_alias} to "{new_url}"')
